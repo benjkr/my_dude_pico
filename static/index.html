@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/build.css" rel="stylesheet">
+    <title>MyDude</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>MyDude</h1>
+            </div>
+        </div>
+        <label class="inline-flex relative items-center cursor-pointer">
+            <input type="checkbox" value="" class="sr-only peer" id="toggle">
+            <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+            </div>
+            <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
+        </label>
+        </br>
+        <span id="temp"></span>
+        <script>
+            const on = () => {
+                console.log("on");
+                fetch('/led/on', {
+                    method: 'GET'
+                })
+            }
+            const off = () => {
+                console.log("off");
+                fetch('/led/off', {
+                    method: 'GET'
+                })
+            }
+            const getState = () => {
+                console.log("off");
+                fetch('/state', {
+                    method: 'GET'
+                }).then(res=>{
+                    return res.json()
+                }).then(data=>{
+                    document.getElementById("temp").innerHTML = JSON.stringify(data)
+                    console.log(data)
+                })
+            }
+            const clicked = (e) => { console.log(e); }
+
+            const toggleSwitch = document.getElementById('toggle');
+            toggleSwitch.addEventListener('input', (e) => {
+                e.target.checked ? on() : off();
+            });
+            getState()
+        </script>
+</body>
+
+</html>
